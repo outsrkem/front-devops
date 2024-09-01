@@ -21,4 +21,4 @@ export const basicInfo = () => ajax('/uias/v1/uias/user/basicInfo', 'GET', null,
 
 export const getService = () => ajax('/uias/internal/v1/uias/service', 'GET', null, null)
 
-export const GetActions = (paths) => ajax(`/uias/internal/v1/uias/${paths.sid}/actions`, 'GET', null, null)
+export const GetActions = (params, paths) => ajax(`/uias/internal/v1/uias/${paths.sid}/actions`, 'GET', params, null)

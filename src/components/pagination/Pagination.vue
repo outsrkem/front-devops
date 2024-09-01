@@ -1,33 +1,37 @@
 <template>
-  <div class="el-pagination">
-    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-      :current-page="currentPage" :page-sizes="[5, 10, 15, 25, 50]"
-      layout="total, sizes, prev, pager, next, jumper" :total="pageTotal"
-    />
-  </div>
+    <div class="el-pagination">
+        <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-size="pageSize"
+            :page-sizes="[10, 15, 25, 50]"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="pageTotal"
+        />
+    </div>
 </template>
 
 <script>
 export default {
   name: 'PaginationIndex',
   props: {
-    pageTotal: { type: Number, default: 0 },
-    pageSize: { type: Number, default: 10 }
+      pageTotal: { type: Number, default: 0 },
+      pageSize: { type: Number, default: 15 }
   },
   data() {
     return {
-      currentPage: 1,
-      pageSizeTemp: 10
+        currentPage: 1
     }
   },
   methods: {
-    handleSizeChange(pageSize) {
-      this.pageSizeTemp = pageSize
-      this.$emit('SizeChange', pageSize)
+      handleSizeChange(page_size) {
+        this.currentPage = 1
+        this.$emit('SizeChange', page_size)
     },
-    handleCurrentChange(currentPage) {
-      const pageSize = this.pageSizeTemp
-      this.$emit('CurrentChange', currentPage, pageSize)
+    handleCurrentChange(current_page) {
+        this.currentPage = current_page
+        this.$emit('CurrentChange', current_page, this.pageSize)
     }
   }
 }

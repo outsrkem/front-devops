@@ -12,5 +12,15 @@ module.exports = defineConfig({
             }
           }
         }
+    },
+    configureWebpack: {
+       //警告webpack的性能提示
+      performance: {
+        hints:'warning',
+        //入口起点的最大体积
+        maxEntrypointSize: 200000,
+        //生成文件的最大体积
+        maxAssetSize: 200000,
+        },
     }
 })
