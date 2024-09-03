@@ -18,9 +18,6 @@
             <el-menu-item index="/policies" @click="OnSwitchRoutes('/policies')">
                 <i class="el-icon-menu"></i><span>Policies</span>
             </el-menu-item>
-            <el-menu-item index="/roles" @click="OnSwitchRoutes('/roles')">
-                <i class="el-icon-menu"></i><span>Roles</span>
-            </el-menu-item>
         </el-menu>
     </div>
 </template>

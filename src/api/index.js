@@ -15,10 +15,12 @@ import ajax from '../api/ajax'
  * 用户登录
  */
 export const login = (data) => ajax('/uias/v1/user/signin', 'POST', null, data)
-// /v1/uias/user/basicInfo
+export const logout = () => ajax('/uias/v1/user/logout', 'POST')
 
 export const basicInfo = () => ajax('/uias/v1/uias/user/basicInfo', 'GET', null, null)
 
 export const getService = () => ajax('/uias/internal/v1/uias/service', 'GET', null, null)
 
 export const GetActions = (params, paths) => ajax(`/uias/internal/v1/uias/${paths.sid}/actions`, 'GET', params, null)
+
+export const GetPolicies = (params, paths) => ajax(`/uias/internal/v1/uias/${paths.sid}/policy`, 'GET', params, null)
