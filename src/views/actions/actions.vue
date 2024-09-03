@@ -59,8 +59,7 @@ export default {
     methods: {
         LoadGetActions: async function (page_size, page) {
             const params = { page_size: page_size, page: page }
-            // const sid = this.$route.query.sid
-            const sid = 'e94994cb7e2c4d929e516ea593d4154d'
+            const sid = this.$route.query.sid
             const res = await GetActions(params, {"sid": sid})
             this.serviceList = res.payload.items
             this.pageTotal = res.payload.page_info.total
@@ -83,6 +82,14 @@ export default {
         },
     },
     created() {
+        // let page_size = this.$route.query.page_size
+        // let page = this.$route.query.page
+        // if (page_size != undefined) {
+        //     this.pageSize = page_size
+        // }
+        // if (page != undefined) {
+        //     this.page = page
+        // }
         this.LoadGetActions(this.pageSize, this.page)
     }
     
