@@ -2,7 +2,7 @@
  * 基于 axios 封装的请求模块
  */
 import axios from 'axios'
-import router from '@/router'
+// import router from '@/router'
 
 // 非组件模块可以这样加载使用 element 的 message 提示组件
 import { ElMessage  } from 'element-plus'
@@ -43,7 +43,7 @@ request.interceptors.response.use(function (response) {
     if (status === 401) {
         // 跳转到登录页面
         // 清除本地存储中的用户登录状态
-        router.push('/login')
+        // router.push('/login')
         ElMessage.error('登录状态无效，请重新登录')
         return error.response
     } else if (status === 403) {

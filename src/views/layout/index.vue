@@ -50,7 +50,7 @@ export default {
             await logout().then(() => {
                 window.sessionStorage.removeItem('active-path')
                 this.$cookies.remove('session');
-                this.$router.push('/login')
+                this.$router.push('/')
             })
         },
         Logout() {

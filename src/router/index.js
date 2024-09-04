@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-const Login = () => import('../views/login/index.vue')
 const Layout = () => import('../views/layout/index.vue')
 const Home = () => import('../views/home/index.vue')
 const Service = () => import('../views/service/service.vue')
@@ -7,11 +6,10 @@ const Actions = () => import('../views/actions/actions.vue')
 const Policies = () => import('../views/policies/policies.vue')
 
 const routes = [
-    { meta: { title: '登录' }, path: '/login', name: 'login', component: Login },
     {
         path: '/',
         component: Layout,
-        meta: { title: 'ledger' },
+        meta: { title: 'devops' },
         children: [
             { meta: { title: '首页' }, path: '', name: 'home', component: Home },
             { meta: { title: '服务管理' }, path: '/service', name: 'service', component: Service },
@@ -22,8 +20,9 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes
+    history: createWebHistory('/uias-devops/'),
+    // base: '/uias-devops/',
+    routes,
 })
 
 export default router

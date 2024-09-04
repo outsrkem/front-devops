@@ -51,3 +51,4 @@ export default {
   padding-bottom: 0;
 }
 </style>
+./pagination.vue
