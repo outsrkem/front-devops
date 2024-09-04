@@ -18,7 +18,7 @@
         <el-row>
             <div>
                 <el-button link >{{ username }}</el-button>
-                <el-button link @click="onLogout">退出</el-button>
+                <el-button link @click="Logout">退出</el-button>
             </div>
         </el-row>
       </el-header>
@@ -46,11 +46,16 @@ export default {
         }
     },
     methods: {
-        onLogout() {
-            this.$confirm('确认退出吗？', '退出提示', {confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning'}).then(() => {
-                logout()
+        LoadLogOut: async function () {
+            await logout().then(() => {
                 window.sessionStorage.removeItem('active-path')
+                this.$cookies.remove('session');
                 this.$router.push('/login')
+            })
+        },
+        Logout() {
+            this.$confirm('确认退出吗？', '退出提示', {confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning'}).then(() => {
+                this.LoadLogOut()
             }).catch(() => {})
         },
     },
