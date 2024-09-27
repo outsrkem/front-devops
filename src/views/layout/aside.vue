@@ -6,18 +6,8 @@
     <div class="el-aside">
         <el-menu :default-active="activePath" unique-opened>
             <!-- @click="onSaveNavState(subItem.path)" 用于保存当前展开的菜单 -->
-            <el-menu-item index="/" @click="OnSwitchRoutes('/')">
-                <i class="el-icon-house"></i><span>首页</span>
-            </el-menu-item>
-            <el-menu-item index="/service" @click="OnSwitchRoutes('/service')">
-                <i class="el-icon-menu"></i><span>Service</span>
-            </el-menu-item>
-            <el-menu-item index="/actions" @click="OnSwitchRoutes('/actions')">
-                <i class="el-icon-menu"></i><span>Actions</span>
-            </el-menu-item>
-            <el-menu-item index="/policies" @click="OnSwitchRoutes('/policies')">
-                <i class="el-icon-menu"></i><span>Policies</span>
-            </el-menu-item>
+            <el-menu-item index="/" @click="OnSwitchRoutes('/')"> <i class="el-icon-house"></i><span>首页</span> </el-menu-item>
+            <el-menu-item index="/service" @click="OnSwitchRoutes('/service')"> <i class="el-icon-menu"></i><span>Service</span> </el-menu-item>
         </el-menu>
     </div>
 </template>
@@ -25,68 +15,66 @@
 <script>
 // import globalBus from '@/utils/global-bus'
 export default {
-    name: 'AppAside',
+    name: "AppAside",
     components: {},
     props: {},
     data() {
         return {
-            activePath: '',
-            menusList: []
-        }
+            activePath: "",
+            menusList: [],
+        };
     },
     computed: {},
     watch: {},
     created() {
-        this.activePath = window.sessionStorage.getItem('active-path') || '/'
+        this.activePath = window.sessionStorage.getItem("active-path") || "/";
     },
     mounted() {},
     methods: {
         saveActivePath(activePath) {
-            this.activePath = activePath
-            window.sessionStorage.setItem('active-path', activePath)
+            this.activePath = activePath;
+            window.sessionStorage.setItem("active-path", activePath);
         },
         // 保存菜单激活状态
         OnSwitchRoutes(activePath) {
-            
             /**
              * 获取所有：this.$route.query  => { user: '1' }
              * 获取单个：this.$route.query.sid
              */
             if (activePath === "/" || activePath === "/service") {
                 if (activePath === "/") {
-                    this.$router.push({ path: activePath })
+                    this.$router.push({ path: activePath });
                 }
                 if (activePath === "/service") {
-                    this.$router.push({ path: activePath, query: { sid: this.$route.query.sid } })
+                    this.$router.push({ path: activePath, query: { sid: this.$route.query.sid } });
                 }
-                this.saveActivePath(activePath)
+                this.saveActivePath(activePath);
             } else {
-                const sid = this.$route.query.sid
+                const sid = this.$route.query.sid;
                 if (sid != undefined) {
-                    this.$router.push({ path: activePath, query: { sid: sid } })
-                    this.saveActivePath(activePath)
+                    this.$router.push({ path: activePath, query: { sid: sid } });
+                    this.saveActivePath(activePath);
                 } else {
                     this.$notify({
                         duration: 2000,
-                        title: '未选择服务',
+                        title: "未选择服务",
                         message: "先在Service中点击Name列的名称选择一个Service",
-                        type: 'warning',
-                        position: 'top-left',
-                        offset: 300
-                    })
+                        type: "warning",
+                        position: "top-left",
+                        offset: 300,
+                    });
                 }
             }
-            
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
 <style scoped lang="less">
-    .el-aside {
-        background-color: #ffffff;
-        .el-menu {
-            border-right: none;
-        }
+.el-aside {
+    background-color: #ffffff;
+    .el-menu {
+        border-right: none;
     }
+}
 </style>

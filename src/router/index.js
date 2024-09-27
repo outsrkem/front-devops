@@ -1,9 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 const Layout = () => import('../views/layout/index.vue')
 const Home = () => import('../views/home/index.vue')
 const Service = () => import('../views/service/service.vue')
-const Actions = () => import('../views/actions/actions.vue')
-const Policies = () => import('../views/policies/policies.vue')
+const Settings = () => import('../views/service/settings.vue')
 
 const routes = [
     {
@@ -11,18 +10,24 @@ const routes = [
         component: Layout,
         meta: { title: 'devops' },
         children: [
-            { meta: { title: '首页' }, path: '', name: 'home', component: Home },
-            { meta: { title: '服务管理' }, path: '/service', name: 'service', component: Service },
-            { meta: { title: '服务管理' }, path: '/actions', name: 'actions', component: Actions },
-            { meta: { title: '服务管理' }, path: '/policies', name: 'policies', component: Policies },
+            { meta: { title: 'UIAS运维' }, path: '', name: 'home', component: Home },
+            { meta: { title: 'UIAS运维 - 服务管理' }, path: '/service', name: 'service', component: Service },
+            { meta: { title: 'UIAS运维 - 服务管理' }, path: '/service/:sid/settings', name: 'Settings', component: Settings },
         ]
       }
 ]
 
 const router = createRouter({
-    history: createWebHistory('/uias-devops/'),
-    // base: '/uias-devops/',
+    history: createWebHashHistory('/uias-devops/'),
+    base: '/devops/',
     routes,
 })
+
+router.beforeEach((to, from, next) => {
+    if (to.meta && to.meta.title) {
+        document.title = to.meta.title;
+    }
+    next();
+});
 
 export default router
