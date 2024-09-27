@@ -1,33 +1,34 @@
 <template>
-    <el-input v-model="userInfo" style="width: 1000px" :rows="12" type="textarea" disabled="true"/>
+    <div>
+        <el-input v-model="userInfo" style="width: 1000px" :rows="34" type="textarea" disabled />
+    </div>
 </template>
-  
+
 <script>
-import { basicInfo } from '../../api'
+import { basicInfo } from "../../api";
 export default {
-    name: 'HomeIndex',
+    name: "HomeIndex",
     components: {},
     props: {},
     data() {
-      return {
-        userInfo: {},
-      }
+        return {
+            userInfo: "",
+        };
     },
     methods: {
         GetbasicInfo: async function () {
-            const res = await basicInfo()
-            this.userInfo = JSON.stringify(res)
-        }
+            const res = await basicInfo();
+            this.userInfo = JSON.stringify(res, null, 4);
+        },
     },
     created() {
-        this.GetbasicInfo()
+        this.GetbasicInfo();
     },
-}
+};
 </script>
-  
+
 <style scoped lang="less">
-  div {
+div {
     height: 98%;
-  }
+}
 </style>
-  

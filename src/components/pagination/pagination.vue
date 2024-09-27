@@ -1,6 +1,7 @@
 <template>
     <div class="el-pagination">
         <el-pagination
+            size="small"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage"
@@ -14,15 +15,15 @@
 
 <script>
 export default {
-    name: 'PaginationIndex',
+    name: "PaginationIndex",
     props: {
         pageTotal: { type: Number, default: 0 },
-        pageSize: { type: Number, default: 15 }
+        pageSize: { type: Number, default: 15 },
     },
     data() {
         return {
-            currentPage: 1
-        }
+            currentPage: 1,
+        };
     },
     methods: {
         // setUrlQuery(ps = this.pageSize) {
@@ -32,23 +33,23 @@ export default {
         //     this.$router.push({path: `${this.$route.path}`, query: queryParams})
         // },
         handleSizeChange(page_size) {
-            this.currentPage = 1
-            this.$emit('SizeChange', page_size)
+            this.currentPage = 1;
+            this.$emit("SizeChange", page_size);
             // this.setUrlQuery(page_size)
         },
         handleCurrentChange(current_page) {
-            this.currentPage = current_page
-            this.$emit('CurrentChange', current_page, this.pageSize)
+            this.currentPage = current_page;
+            this.$emit("CurrentChange", current_page, this.pageSize);
             // this.setUrlQuery()
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
 <style scoped>
 .el-pagination {
-  padding-top: 10px;
-  padding-bottom: 0;
+    padding-top: 10px;
+    padding-bottom: 0;
 }
 </style>
 ./pagination.vue

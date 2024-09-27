@@ -1,6 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
-    publicPath:'/uias-devops/',
+    publicPath:'/devops/',
     transpileDependencies: true,
     devServer: {
         proxy: {
@@ -12,7 +12,8 @@ module.exports = defineConfig({
               '^/uias': '/uias'
             }
           }
-        }
+        },
+        webSocketServer: false,
     },
     configureWebpack: {
        //警告webpack的性能提示

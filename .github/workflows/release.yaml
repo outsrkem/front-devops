@@ -1,0 +1,49 @@
+name: Release Version
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+env:
+  NAME: devops
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4.1.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.x'
+
+      - name: npm install
+        run: npm install
+
+      - name: Get tag version
+        id: branch-names
+        uses: tj-actions/branch-names@v8
+        with:
+          strip_tag_prefix: v
+
+      - name: build
+        run: npm run build
+
+      - name: Pack Compression
+        run: |
+          mv dist ${{ env.NAME }}
+          tar zcvf ${{ env.NAME }}-${{ steps.branch-names.outputs.tag }}.tar.gz ${{ env.NAME }}
+
+      - name: Upload
+        env:
+          AK: ${{ secrets.HW_ACCESS_KEY_ID }}
+          SK: ${{ secrets.HW_SECRET_ACCESS_KEY }}
+        run: |
+          wget "https://obs-community.obs.cn-north-1.myhuaweicloud.com/obsutil/current/obsutil_linux_amd64.tar.gz"
+          tar -xzvf obsutil_linux_amd64.tar.gz
+          mv obsutil_linux_amd64_* obsutil
+          chmod 755 obsutil/obsutil
+          ./obsutil/obsutil config -i=$AK -k=$SK -e=obs.cn-north-4.myhuaweicloud.com
+          ./obsutil/obsutil cp ./${{ env.NAME }}-${{ steps.branch-names.outputs.tag }}.tar.gz obs://110254b2cf424535aec05afe14ab8497/${{ env.NAME }}/
