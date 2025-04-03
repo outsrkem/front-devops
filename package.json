@@ -9,18 +9,18 @@
     },
     "dependencies": {
         "@element-plus/icons": "^0.0.11",
-        "axios": "^1.7.7",
-        "core-js": "^3.8.3",
-        "element-plus": "^2.8.4",
-        "less": "^4.2.0",
+        "axios": "^1.8.4",
+        "core-js": "^3.41.0",
+        "element-plus": "^2.9.7",
+        "less": "^4.2.2",
         "less-loader": "^12.2.0",
-        "vue": "^3.5.10",
-        "vue-cookies": "^1.8.4",
-        "vue-router": "^4.4.5"
+        "vue": "^3.5.13",
+        "vue-cookies": "^1.8.6",
+        "vue-router": "^4.5.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.12.16",
-        "@babel/eslint-parser": "^7.12.16",
+        "@babel/core": "^7.26.10",
+        "@babel/eslint-parser": "^7.27.0",
         "@vue/cli-plugin-babel": "~5.0.0",
         "@vue/cli-plugin-eslint": "~5.0.0",
         "@vue/cli-plugin-router": "~5.0.0",
