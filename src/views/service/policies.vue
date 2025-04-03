@@ -38,6 +38,7 @@
                 <el-button size="small" type="primary" @click="onSubmit">确定</el-button>
             </div>
         </el-dialog>
+
         <el-dialog v-model="deleteDialog" title="删除系统策略" width="900" :close-on-click-modal="false" draggable destroy-on-close>
             <el-table :data="deletePolicieData" style="width: 100%">
                 <el-table-column prop="id" label="ID" />
@@ -128,9 +129,6 @@ export default {
             this.dialogVisible = true;
         },
         onSelectService(val) {
-            // console.log("点击了按钮");
-            // this.editPoliciesText = val;
-
             this.editPoliciesText = {};
             this.editPoliciesText = val;
             this.$refs.EditPolicies.openEditPoliciesDialog();
@@ -160,11 +158,11 @@ export default {
         onSubmitDelete() {
             // 发送请求
             if (this.deletion === "DELETE") {
-                let policie_id = [];
+                let policie_id = "";
                 this.deletePolicieData.map((item) => {
-                    policie_id.push(item.id);
+                    policie_id = item.id;
                 });
-                let body = { policy_id: policie_id };
+                let body = { policy: { ids: policie_id } };
                 this.loadDeletePolicy(body);
             } else {
                 this.$notify({ title: "请完整输入“DELETE”", duration: 5000, type: "error" });

@@ -66,8 +66,12 @@ export default {
             this.policy_id = this.vdata.id;
 
             let data = {
-                policy_id: this.policy_id,
-                policy: JSON.parse(this.dataText),
+                // policy_id: this.policy_id,
+                // policy: JSON.parse(this.dataText),
+                policy: {
+                    id: this.policy_id,
+                    policyInfo: JSON.parse(this.dataText),
+                },
             };
             this.loadEditPolicy(data);
             // this.$notify({ title: "暂不支持", duration: 5000, type: "error" });

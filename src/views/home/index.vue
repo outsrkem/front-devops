@@ -1,6 +1,10 @@
 <template>
     <div>
-        <el-input v-model="userInfo" style="width: 1000px" :rows="34" type="textarea" disabled />
+        <el-card>
+            <div class="code-container">
+                <pre class="codepre">{{ userInfo }}</pre>
+            </div>
+        </el-card>
     </div>
 </template>
 
@@ -30,5 +34,37 @@ export default {
 <style scoped lang="less">
 div {
     height: 98%;
+}
+/* 凭据展示格式 */
+.codepre {
+    box-sizing: border-box;
+    /*以下样式是自动换行代码*/
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+    /*以上样式是自动换行代码，需要的加上，不需要的删除*/
+    overflow: auto;
+    font-family: "Menlo", "Monaco", "Consolas", "Courier New", monospace;
+    font-size: 13px;
+    padding: 1px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    line-height: 1.2;
+    color: #333333;
+    word-break: break-all;
+    word-wrap: break-word;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+}
+.code-container {
+    position: relative;
+    overflow: auto;
+    margin-top: 10px;
+    border: 1px solid #ebeef5;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #f5f5f5;
 }
 </style>

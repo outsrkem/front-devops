@@ -53,6 +53,7 @@
                 <el-button size="small" type="primary" @click="onSubmit">确定</el-button>
             </div>
         </el-dialog>
+
         <el-dialog v-model="deleteDialog" title="删除服务" width="900" :close-on-click-modal="false" draggable destroy-on-close>
             <el-table :data="deleteServiceData" style="width: 100%">
                 <el-table-column prop="name" label="Name" />
@@ -119,9 +120,8 @@ export default {
                     this.$notify({ title: "创建失败", duration: 5000, message: msg, type: "error" });
                 });
         },
-        loadDeleteService: function (sid) {
-            const paths = { sid: sid };
-            DeleteService(paths)
+        loadDeleteService: function (data) {
+            DeleteService(data)
                 .then(() => {
                     this.$notify({ title: "删除成功", duration: 2000, type: "success" });
                     this.deleteDialog = false;
@@ -165,7 +165,8 @@ export default {
         },
         onSubmitDelete() {
             if (this.deletion === this.deletesid) {
-                this.loadDeleteService(this.deletesid);
+                let body = { service: { ids: this.deletesid } };
+                this.loadDeleteService(body);
             } else {
                 this.$notify({ title: "请完整输入正确的服务ID", duration: 5000, type: "error" });
                 return;

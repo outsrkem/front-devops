@@ -20,7 +20,7 @@
             <el-table-column prop="id" label="ID" />
             <el-table-column prop="actionInfo.name" label="Name" min-width="150" />
             <el-table-column prop="actionInfo.description" label="Description" min-width="150" />
-            <el-table-column prop="actionInfo.actionGroup" label="Action Group" />
+            <el-table-column prop="actionInfo.group" label="Group" />
             <el-table-column prop="actionInfo.status" label="Status" />
             <el-table-column label="Operate" min-width="100">
                 <template #default="scope">
@@ -42,7 +42,7 @@
             <el-table :data="deleteActionData" style="width: 100%">
                 <el-table-column prop="id" label="ID" />
                 <el-table-column prop="action" label="Name" />
-                <el-table-column prop="action_group" label="Action Group" />
+                <el-table-column prop="group" label="Group" />
                 <el-table-column prop="status" label="Status" />
             </el-table>
             <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 18px">
@@ -177,7 +177,7 @@ export default {
                 this.deleteActionData.map((item) => {
                     action_id.push(item.id);
                 });
-                let body = { action_id: action_id };
+                let body = { action: { ids: action_id } };
                 this.loadDeleteAction(body);
             } else {
                 this.$notify({ title: "请完整输入“DELETE”", duration: 5000, type: "error" });

@@ -4,16 +4,16 @@ module.exports = defineConfig({
     transpileDependencies: true,
     devServer: {
         proxy: {
-          '/': {
-            target: 'http://10.10.10.14:8080',
-            changeOrigin: true,
-            secure: false,
-            pathRewrite: {
-              '^/uias': '/uias'
+            '/': {
+              target: 'https://uias-devops.outsrkem.top:30078/',
+              changeOrigin: true,
+              secure: false,
+              pathRewrite: {
+                '^/uias': '/uias'
+              }
             }
-          }
-        },
-        webSocketServer: false,
+          },
+          webSocketServer: false,
     },
     configureWebpack: {
        //警告webpack的性能提示

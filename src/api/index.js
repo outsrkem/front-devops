@@ -23,7 +23,7 @@ export const getService = () => ajax('/internal/v1/uias/service', 'GET', null, n
 // /internal/v1/uias/service
 export const CreateService = (data) => ajax(`/internal/v1/uias/service`, 'POST', null, data)
 // 删除服务
-export const DeleteService = (paths) => ajax(`/internal/v1/uias/service/${paths.sid}`, 'DELETE', null, null)
+export const DeleteService = (data) => ajax(`/internal/v1/uias/service`, 'DELETE', null, data)
 
 export const GetActions = (params, paths) => ajax(`/internal/v1/uias/${paths.sid}/actions`, 'GET', params, null)
 
