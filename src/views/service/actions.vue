@@ -40,10 +40,10 @@
         </el-dialog>
         <el-dialog v-model="deleteDialog" title="删除Action" width="800" :close-on-click-modal="false" draggable destroy-on-close>
             <el-table :data="deleteActionData" style="width: 100%">
-                <el-table-column prop="id" label="ID" />
-                <el-table-column prop="action" label="Name" />
-                <el-table-column prop="group" label="Group" />
-                <el-table-column prop="status" label="Status" />
+                <el-table-column prop="id" label="ID" width="100" />
+                <el-table-column prop="actionInfo.name" label="Name" width="320" />
+                <el-table-column prop="actionInfo.group" label="Group" />
+                <el-table-column prop="actionInfo.status" label="Status" />
             </el-table>
             <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 18px">
                 <div style="display: flex; flex-grow: 1; justify-content: flex-end">
