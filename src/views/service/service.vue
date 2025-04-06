@@ -63,7 +63,6 @@
                 <div style="display: flex; flex-grow: 1; justify-content: flex-end">
                     <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">如果您确定要删除，请输入服务ID</div>
                 </div>
-
                 <el-input style="margin-left: 18px" size="small" v-model="deletion" placeholder="示例：715ffadad0d64f968b6d96939f4e605c" />
             </div>
             <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 18px">
