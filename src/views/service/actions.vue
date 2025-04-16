@@ -19,6 +19,7 @@
         >
             <el-table-column prop="id" label="ID" width="100" />
             <el-table-column prop="actionInfo.name" label="Name" min-width="150" />
+            <el-table-column prop="actionInfo.title" label="Title" min-width="150" />
             <el-table-column prop="actionInfo.description" label="Description" min-width="150" />
             <el-table-column prop="actionInfo.group" label="Group" />
             <el-table-column label="Status">
@@ -44,10 +45,11 @@
             </div>
         </el-dialog>
 
-        <el-dialog v-model="deleteDialog" title="删除Action" width="800" :close-on-click-modal="false" draggable destroy-on-close>
+        <el-dialog v-model="deleteDialog" title="删除Action" width="1000" :close-on-click-modal="false" draggable destroy-on-close>
             <el-table :data="deleteActionData" style="width: 100%">
                 <el-table-column prop="id" label="ID" width="100" />
                 <el-table-column prop="actionInfo.name" label="Name" width="320" />
+                <el-table-column prop="actionInfo.title" label="Title" />
                 <el-table-column prop="actionInfo.group" label="Group" />
                 <el-table-column label="Status">
                     <template #default="scope">
