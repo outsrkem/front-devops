@@ -1,28 +1,25 @@
-const { defineConfig } = require('@vue/cli-service')
+const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
-    publicPath:'/devops/',
+    publicPath: "/devops/",
     transpileDependencies: true,
     devServer: {
         proxy: {
-            '/': {
-              target: 'https://uias.localvm.outsrkem.top:30078/',
-              changeOrigin: true,
-              secure: false,
-              pathRewrite: {
-                '^/uias': '/uias'
-              }
-            }
-          },
-          webSocketServer: false,
+            "/": {
+                target: "https://uias.localvm.outsrkem.top:30078/",
+                changeOrigin: true,
+                secure: false,
+                pathRewrite: {
+                    "^/uias": "/uias",
+                },
+            },
+        },
+        webSocketServer: false,
     },
     configureWebpack: {
-       //警告webpack的性能提示
-      performance: {
-        hints:'warning',
-        //入口起点的最大体积
-        maxEntrypointSize: 200000,
-        //生成文件的最大体积
-        maxAssetSize: 200000,
+        performance: {
+            hints: "warning",
+            maxEntrypointSize: 200000,
+            maxAssetSize: 200000,
         },
-    }
-})
+    },
+});

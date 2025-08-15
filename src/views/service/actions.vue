@@ -10,13 +10,7 @@
                 <el-button size="small" type="primary" @click="onRefresh" style="margin-left: 10px">刷新</el-button>
             </el-row>
         </div>
-        <el-table
-            :data="serviceList"
-            style="width: 100%"
-            v-loading="loading"
-            element-loading-text="拼命加载中"
-            element-loading-spinner="el-icon-loading"
-        >
+        <el-table :data="serviceList" style="width: 100%" v-loading="loading">
             <el-table-column prop="id" label="ID" width="100" />
             <el-table-column prop="actionInfo.name" label="Name" min-width="150" />
             <el-table-column prop="actionInfo.title" label="Title" min-width="150" />
@@ -77,6 +71,7 @@
 <script>
 import Pagination from "@/components/pagination/pagination.vue";
 import EditAction from "./editAction.vue";
+import { convertToLimitOffset } from "../../utils/common.js";
 import { GetActions, CreateAction, DeleteAction } from "../../api";
 
 export default {
@@ -91,8 +86,7 @@ export default {
             pageSize: 10,
             page: 1,
             dialogVisible: false,
-            placeholder:
-                '[{"actionInfo":{"action":"uias:users:listAccount","actionGroup":"ListOnly","description":"查询用户列表","status":"enabled"}}]',
+            placeholder: '[{"actionInfo":{"action":"uias:users:listAccount","actionGroup":"ListOnly","description":"查询用户列表","status":"enabled"}}]',
             actionsText: "",
             deleteDialog: false,
             deleteActionData: [],
@@ -105,7 +99,7 @@ export default {
     },
     methods: {
         LoadGetActions: async function (page_size, page) {
-            const params = { page_size: page_size, page: page };
+            const params = convertToLimitOffset(page, page_size);
             const sid = this.$route.params.sid;
             const res = await GetActions(params, { sid: sid });
             this.serviceList = res.payload.items;
