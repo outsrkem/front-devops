@@ -32,9 +32,9 @@
 </template>
 
 <script>
-import AppAside from "./aside";
+import AppAside from "./aside.vue";
 import { toLoginPage } from "@/utils/common.js";
-import { basicInfo, logout } from "../../api";
+import { basicInfo, logout } from "../../api/index.js";
 export default {
     name: "LayoutIndex",
     components: {

@@ -1,27 +1,27 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-const Layout = () => import('../views/layout/index.vue')
-const Home = () => import('../views/home/index.vue')
-const Service = () => import('../views/service/service.vue')
-const Settings = () => import('../views/service/settings.vue')
+import { createRouter, createWebHashHistory } from "vue-router";
+const Layout = () => import("../views/layout/index.vue");
+const Home = () => import("../views/home/index.vue");
+const Service = () => import("../views/service/service.vue");
+const Settings = () => import("../views/service/settings.vue");
 
 const routes = [
     {
-        path: '/',
+        path: "/",
         component: Layout,
-        meta: { title: 'devops' },
+        meta: { title: "devops" },
         children: [
-            { meta: { title: 'UIAS运维' }, path: '', name: 'home', component: Home },
-            { meta: { title: 'UIAS运维 - 服务管理' }, path: '/service', name: 'service', component: Service },
-            { meta: { title: 'UIAS运维 - 服务管理' }, path: '/service/:sid/settings', name: 'Settings', component: Settings },
-        ]
-      }
-]
+            { meta: { title: "UIAS运维" }, path: "", name: "home", component: Home },
+            { meta: { title: "UIAS运维 - 服务管理" }, path: "/service", name: "service", component: Service },
+            { meta: { title: "UIAS运维 - 服务管理" }, path: "/service/:sid/settings", name: "Settings", component: Settings },
+        ],
+    },
+];
 
 const router = createRouter({
-    history: createWebHashHistory('/uias-devops/'),
-    base: '/devops/',
+    history: createWebHashHistory("/uias-devops/"),
+    base: "/devops/",
     routes,
-})
+});
 
 router.beforeEach((to, from, next) => {
     if (to.meta && to.meta.title) {
@@ -30,4 +30,4 @@ router.beforeEach((to, from, next) => {
     next();
 });
 
-export default router
+export default router;

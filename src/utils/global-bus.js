@@ -4,9 +4,9 @@
  * 作用：让任何组件相互通信
  */
 
-import Vue from 'vue'
+import Vue from "vue";
 
-export default new Vue()
+export default new Vue();
 
 // 假设a 要给b发送数据
 

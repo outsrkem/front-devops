@@ -11,13 +11,7 @@
             </el-row>
         </div>
         <!--内容开始-->
-        <el-table
-            :data="serviceList"
-            style="width: 100%"
-            v-loading="loading"
-            element-loading-text="拼命加载中"
-            element-loading-spinner="el-icon-loading"
-        >
+        <el-table :data="serviceList" style="width: 100%" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading">
             <el-table-column prop="id" label="ID" />
             <el-table-column prop="name" label="Name" />
             <el-table-column prop="description" label="Description" />

@@ -14,13 +14,7 @@
                 <!--/刷新按钮-->
             </div>
             <!--内容开始-->
-            <el-table
-                :data="serviceList"
-                style="width: 100%"
-                v-loading="loading"
-                element-loading-text="加载中"
-                element-loading-spinner="el-icon-loading"
-            >
+            <el-table :data="serviceList" style="width: 100%" v-loading="loading" element-loading-text="加载中" element-loading-spinner="el-icon-loading">
                 <el-table-column label="Name">
                     <template #default="scope">
                         <el-tooltip class="box-item" effect="dark" :content="scope.row.id" placement="right">
