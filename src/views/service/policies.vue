@@ -11,7 +11,7 @@
             </el-row>
         </div>
         <!--内容开始-->
-        <el-table :data="serviceList" style="width: 100%" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading">
+        <el-table :data="serviceList" style="width: 100%" v-loading="loading">
             <el-table-column prop="id" label="ID" />
             <el-table-column prop="name" label="Name" />
             <el-table-column prop="description" label="Description" />
@@ -59,7 +59,7 @@
 import Pagination from "@/components/pagination/pagination.vue";
 import EditPolicies from "./editPolicies.vue";
 import { GetPolicies, CreatePolicy, DeletePolicy } from "../../api";
-
+import { withDelay } from "../../utils/common.js";
 export default {
     name: "PoliciesIndex",
     components: {
@@ -74,7 +74,6 @@ export default {
             pageTotal: 0,
             pageSize: 10,
             page: 1,
-            timeoutId: null,
             dialogVisible: false,
             policiesText: "",
             placeholder: "",
@@ -86,9 +85,10 @@ export default {
     },
     methods: {
         LoadGetPolicies: async function (page_size, page) {
+            this.loading = true;
             const params = { page_size: page_size, page: page };
             const sid = this.$route.params.sid;
-            const res = await GetPolicies(params, { sid: sid });
+            const res = await withDelay(() => GetPolicies(params, { sid: sid }));
             this.serviceList = res.payload.items;
             this.pageTotal = res.payload.page_info.total;
             this.loading = false;
@@ -128,14 +128,8 @@ export default {
             this.$refs.EditPolicies.openEditPoliciesDialog();
         },
         onRefresh() {
-            // this.loading = true;
-            // this.LoadGetPolicies(this.pageSize, this.page);
-            // // 添加延时，优化视觉体验感
             this.loading = true;
-            clearTimeout(this.timeoutId);
-            this.timeoutId = setTimeout(() => {
-                this.LoadGetPolicies(this.pageSize, this.page);
-            }, 650);
+            this.LoadGetPolicies(this.pageSize, this.page);
         },
         onSubmit() {
             // 发送请求创建策略

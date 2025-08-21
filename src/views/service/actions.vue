@@ -71,7 +71,7 @@
 <script>
 import Pagination from "@/components/pagination/pagination.vue";
 import EditAction from "./editAction.vue";
-import { convertToLimitOffset } from "../../utils/common.js";
+import { withDelay, convertToLimitOffset } from "../../utils/common.js";
 import { GetActions, CreateAction, DeleteAction } from "../../api";
 
 export default {
@@ -91,7 +91,6 @@ export default {
             deleteDialog: false,
             deleteActionData: [],
             deletion: "",
-            timeoutId: null,
             editActionText: null,
             notify: false,
             notification: null,
@@ -99,9 +98,10 @@ export default {
     },
     methods: {
         LoadGetActions: async function (page_size, page) {
+            this.loading = true;
             const params = convertToLimitOffset(page, page_size);
             const sid = this.$route.params.sid;
-            const res = await GetActions(params, { sid: sid });
+            const res = await withDelay(() => GetActions(params, { sid: sid }));
             this.serviceList = res.payload.items;
             this.pageTotal = res.payload.page_info.total;
             this.loading = false;
@@ -144,10 +144,7 @@ export default {
         onRefresh() {
             // 添加延时，优化视觉体验感
             this.loading = true;
-            clearTimeout(this.timeoutId);
-            this.timeoutId = setTimeout(() => {
-                this.LoadGetActions(this.pageSize, this.page);
-            }, 650);
+            this.LoadGetActions(this.pageSize, this.page);
         },
         onCurrentChange(page) {
             this.page = page;

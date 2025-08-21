@@ -14,7 +14,7 @@
                 <!--/刷新按钮-->
             </div>
             <!--内容开始-->
-            <el-table :data="serviceList" style="width: 100%" v-loading="loading" element-loading-text="加载中" element-loading-spinner="el-icon-loading">
+            <el-table :data="serviceList" style="width: 100%" v-loading="loading">
                 <el-table-column label="Name">
                     <template #default="scope">
                         <el-tooltip class="box-item" effect="dark" :content="scope.row.id" placement="right">
@@ -70,7 +70,7 @@
 <script>
 import { formatTime } from "@/utils/date.js";
 import { getService, CreateService, DeleteService } from "../../api";
-
+import { withDelay } from "../../utils/common.js";
 export default {
     name: "ServiceIndex",
     data() {
@@ -78,7 +78,6 @@ export default {
             breadcrumb: ["首页", "权限管理"],
             serviceList: [],
             loading: true,
-            timeoutId: null,
             dialogVisible: false,
             serviceform: {
                 name: "",
@@ -92,8 +91,9 @@ export default {
     },
     methods: {
         GetService: async function () {
+            this.loading = true;
             try {
-                const res = await getService();
+                const res = await withDelay(() => getService());
                 this.serviceList = res.payload.items;
                 this.loading = false;
             } catch (err) {
@@ -132,14 +132,8 @@ export default {
             this.$router.push({ path: `/service/${sid}/settings` });
         },
         onRefresh() {
-            // this.loading = true;
-            // this.GetService();
-
             this.loading = true;
-            clearTimeout(this.timeoutId);
-            this.timeoutId = setTimeout(() => {
-                this.GetService(this.pageSize, this.page);
-            }, 650);
+            this.GetService(this.pageSize, this.page);
         },
         onSubmit() {
             // 创建服务
@@ -167,6 +161,7 @@ export default {
         },
     },
     created() {
+        this.$globalBus.emit("updateActivePath", "/service");
         this.GetService();
     },
 };

@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+const NotFound = () => import("../views/404/index.vue");
 const Layout = () => import("../views/layout/index.vue");
 const Home = () => import("../views/home/index.vue");
 const Service = () => import("../views/service/service.vue");
@@ -15,6 +16,7 @@ const routes = [
             { meta: { title: "UIAS运维 - 服务管理" }, path: "/service/:sid/settings", name: "Settings", component: Settings },
         ],
     },
+    { meta: { title: "404 页面未找到" }, path: "/:pathMatch(.*)*", component: NotFound },
 ];
 
 const router = createRouter({

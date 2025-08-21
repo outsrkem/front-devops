@@ -33,6 +33,7 @@ export default {
         },
     },
     created() {
+        this.$globalBus.emit("updateActivePath", "/service");
         const tabPane = this.$route.query.p;
         if (tabPane) {
             this.activeName = tabPane;

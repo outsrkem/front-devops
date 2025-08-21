@@ -26,7 +26,11 @@ export default defineConfig({
 
     server: {
         proxy: {
-            "/": {
+            "/api": {
+                target: "https://p1sch.outsrkem.top:20287",
+                changeOrigin: true,
+            },
+            "/authui": {
                 target: "https://p1sch.outsrkem.top:20287",
                 changeOrigin: true,
             },

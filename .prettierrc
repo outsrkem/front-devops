@@ -18,5 +18,13 @@
     "tabWidth": 4,
     "useTabs": false,
     "endOfLine": "lf",
-    "embeddedLanguageFormatting": "auto"
+    "embeddedLanguageFormatting": "auto",
+    "overrides": [
+        {
+            "files": ["*.yaml", "*.yml"],
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
 }

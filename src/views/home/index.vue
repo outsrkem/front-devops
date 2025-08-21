@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-card>
+        <el-card v-loading="loading">
             <div class="code-container">
                 <pre class="codepre">{{ userInfo }}</pre>
             </div>
@@ -10,6 +10,7 @@
 
 <script>
 import { basicInfo } from "../../api";
+import { withDelay } from "../../utils/common.js";
 export default {
     name: "HomeIndex",
     components: {},
@@ -17,15 +18,20 @@ export default {
     data() {
         return {
             userInfo: "",
+            loading: true,
         };
     },
+    // withDelay(() => GetActions(params, { sid: sid }));
     methods: {
         GetbasicInfo: async function () {
-            const res = await basicInfo();
+            const res = await withDelay(() => basicInfo()).finally(() => {
+                this.loading = false;
+            });
             this.userInfo = JSON.stringify(res, null, 4);
         },
     },
     created() {
+        this.$globalBus.emit("updateActivePath", "/");
         this.GetbasicInfo();
     },
 };
