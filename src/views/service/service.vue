@@ -167,6 +167,7 @@ export default {
         },
     },
     created() {
+        this.$globalBus.emit("updateActivePath", "/service");
         this.GetService();
     },
 };

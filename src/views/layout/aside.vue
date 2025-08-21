@@ -27,13 +27,14 @@ export default {
     computed: {},
     watch: {},
     created() {
-        this.activePath = window.sessionStorage.getItem("active-path") || "/";
+        this.$globalBus.on("updateActivePath", (data) => {
+            this.activePath = data || "/";
+        });
     },
     mounted() {},
     methods: {
         saveActivePath(activePath) {
             this.activePath = activePath;
-            window.sessionStorage.setItem("active-path", activePath);
         },
         // 保存菜单激活状态
         OnSwitchRoutes(activePath) {
