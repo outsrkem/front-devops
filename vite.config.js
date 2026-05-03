@@ -25,14 +25,17 @@ export default defineConfig({
     },
 
     server: {
+        host: "0.0.0.0",
         proxy: {
             "/api": {
-                target: "https://p1sch.outsrkem.top:20287",
+                target: "https://uias.localvm.outsrkem.top:30078",
                 changeOrigin: true,
+                secure: false,
             },
             "/authui": {
-                target: "https://p1sch.outsrkem.top:20287",
+                target: "https://uias.localvm.outsrkem.top:30078/",
                 changeOrigin: true,
+                secure: false,
             },
         },
     },

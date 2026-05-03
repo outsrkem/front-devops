@@ -1,19 +1,21 @@
 <template>
-    <el-card>
-        <el-tabs v-model="activeName" @tab-change="onPaneChange">
-            <el-tab-pane label="Actions" name="atcions">
-                <div>
-                    <ActionsIndex></ActionsIndex>
-                </div>
-            </el-tab-pane>
-            <el-tab-pane label="Policies" name="policies">
-                <div>
-                    <PoliciesIndex></PoliciesIndex>
-                </div>
-                <div></div>
-            </el-tab-pane>
-        </el-tabs>
-    </el-card>
+    <div class="border_red">
+        <el-card>
+            <el-tabs v-model="activeName" @tab-change="onPaneChange">
+                <el-tab-pane label="Actions" name="atcions">
+                    <div>
+                        <ActionsIndex></ActionsIndex>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="Policies" name="policies">
+                    <div>
+                        <PoliciesIndex></PoliciesIndex>
+                    </div>
+                    <div></div>
+                </el-tab-pane>
+            </el-tabs>
+        </el-card>
+    </div>
 </template>
 
 <script>

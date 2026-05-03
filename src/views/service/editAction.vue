@@ -3,8 +3,8 @@
         <el-dialog v-model="dialogVisible" title="修改Action" width="500" :close-on-click-modal="false" draggable destroy-on-close>
             <el-input v-model="actionText" style="width: 100%" :rows="20" type="textarea" />
             <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 18px">
-                <el-button size="small" @click="dialogVisible = false">取消</el-button>
-                <el-button size="small" type="primary" @click="onSubmit">确定</el-button>
+                <el-button @click="dialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="onSubmit">确定</el-button>
             </div>
         </el-dialog>
     </div>
