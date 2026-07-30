@@ -9,11 +9,11 @@ const routes = [
     {
         path: "/",
         component: Layout,
-        meta: { title: "devops" },
+        meta: { title: "SRE运维" },
         children: [
-            { meta: { title: "UIAS运维" }, path: "", name: "home", component: Home },
-            { meta: { title: "UIAS运维 - 服务管理" }, path: "/service", name: "service", component: Service },
-            { meta: { title: "UIAS运维 - 服务管理" }, path: "/service/:sid/settings", name: "Settings", component: Settings },
+            { meta: { title: "SRE运维" }, path: "", name: "home", component: Home },
+            { meta: { title: "SRE运维 - 服务管理" }, path: "/service", name: "service", component: Service },
+            { meta: { title: "SRE运维 - 服务管理" }, path: "/service/:sid/settings", name: "Settings", component: Settings },
         ],
     },
     { meta: { title: "404 页面未找到" }, path: "/:pathMatch(.*)*", component: NotFound },
