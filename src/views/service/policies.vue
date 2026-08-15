@@ -3,33 +3,29 @@
         <div class="my_refresh">
             <div>
                 <el-row>
-                    <el-button size="small" type="primary" style="margin-left: 10px" @click="onOpenCreatePolicies()">创建系统策略</el-button>
+                    <el-button type="primary" style="margin-left: 10px" @click="onOpenCreatePolicies()">创建系统策略</el-button>
                 </el-row>
             </div>
             <el-row>
-                <el-button size="small" type="primary" @click="onRefresh" style="margin-left: 10px">刷新</el-button>
+                <el-button type="primary" :icon="Refresh" @click="onRefresh" :loading="loading" style="margin-left: 10px">刷新</el-button>
             </el-row>
         </div>
         <!--内容开始-->
-        <el-table :data="serviceList" style="width: 100%" v-loading="loading">
-            <el-table-column prop="id" label="ID" />
-            <el-table-column prop="name" label="Name" />
-            <el-table-column prop="description" label="Description" />
-            <el-table-column label="Operate">
-                <template #default="scope">
-                    <el-button link type="primary" @click="onSelectService(scope.row)">Edit</el-button>
-                    <el-button link type="primary" @click="onDeletePolicie(scope.row)">Delete</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
+        <!-- 已替换为 MyTable -->
+        <MyTable :data="serviceList" :columns="columns" v-loading="loading">
+            <template #operate="{ row }">
+                <el-button link type="primary" @click="onSelectService(row)">Edit</el-button>
+                <el-button link type="primary" @click="onDeletePolicie(row)">Delete</el-button>
+            </template>
+        </MyTable>
         <!--分页开始-->
         <Pagination :pageTotal="pageTotal" :pageSize="pageSize" @CurrentChange="onCurrentChange" @SizeChange="onSizeChange"> </Pagination>
         <!--分页结束-->
         <el-dialog v-model="dialogVisible" title="创建系统策略" width="500" :close-on-click-modal="false" draggable destroy-on-close>
             <el-input v-model="policiesText" style="width: 100%" :rows="20" type="textarea" :placeholder="placeholder" />
             <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 18px">
-                <el-button size="small" @click="dialogVisible = false">取消</el-button>
-                <el-button size="small" type="primary" @click="onSubmit">确定</el-button>
+                <el-button @click="dialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="onSubmit">确定</el-button>
             </div>
         </el-dialog>
 
@@ -44,11 +40,11 @@
                     <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">如果您确定要删除，请输入 DELETE</div>
                 </div>
 
-                <el-input style="margin-left: 18px" size="small" v-model="deletion" placeholder="DELETE" />
+                <el-input style="margin-left: 18px" v-model="deletion" placeholder="DELETE" />
             </div>
             <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 18px">
-                <el-button size="small" @click="deleteDialog = false">取消</el-button>
-                <el-button size="small" type="primary" @click="onSubmitDelete">确定</el-button>
+                <el-button @click="deleteDialog = false">取消</el-button>
+                <el-button type="primary" @click="onSubmitDelete">确定</el-button>
             </div>
         </el-dialog>
         <edit-policies ref="EditPolicies" :vdata="editPoliciesText"></edit-policies>
@@ -56,6 +52,8 @@
 </template>
 
 <script>
+import MyTable from "../../components/MyTable/MyTable.vue";
+import { Refresh } from "@element-plus/icons-vue";
 import Pagination from "@/components/pagination/pagination.vue";
 import EditPolicies from "./editPolicies.vue";
 import { GetPolicies, CreatePolicy, DeletePolicy } from "../../api";
@@ -63,8 +61,14 @@ import { withDelay } from "../../utils/common.js";
 export default {
     name: "PoliciesIndex",
     components: {
+        MyTable,
         Pagination,
         EditPolicies,
+    },
+    setup() {
+        return {
+            Refresh,
+        };
     },
     data() {
         return {
@@ -81,6 +85,13 @@ export default {
             deleteDialog: false,
             deletion: "", // 删除确认的文本
             editPoliciesText: {},
+            // MyTable 列配置
+            columns: [
+                { label: "ID", prop: "id" },
+                { label: "Name", prop: "name" },
+                { label: "Description", prop: "description" },
+                { label: "Operate", slot: "operate" },
+            ],
         };
     },
     methods: {

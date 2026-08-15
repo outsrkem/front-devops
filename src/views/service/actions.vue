@@ -3,39 +3,34 @@
         <div class="my_refresh">
             <div>
                 <el-row>
-                    <el-button size="small" type="primary" style="margin-left: 10px" @click="onCreateAction">创建Action</el-button>
+                    <el-button type="primary" style="margin-left: 10px" @click="onCreateAction">创建Action</el-button>
                 </el-row>
             </div>
             <el-row>
-                <el-button size="small" type="primary" @click="onRefresh" style="margin-left: 10px">刷新</el-button>
+                <el-button type="primary" :icon="Refresh" @click="onRefresh" :loading="loading" style="margin-left: 10px">刷新</el-button>
             </el-row>
         </div>
-        <el-table :data="serviceList" style="width: 100%" v-loading="loading">
-            <el-table-column prop="id" label="ID" width="100" />
-            <el-table-column prop="actionInfo.name" label="Name" min-width="150" />
-            <el-table-column prop="actionInfo.title" label="Title" min-width="150" />
-            <el-table-column prop="actionInfo.description" label="Description" min-width="150" />
-            <el-table-column prop="actionInfo.group" label="Group" />
-            <el-table-column label="Status">
-                <template #default="scope">
-                    <span class="status-dot" :class="scope.row.actionInfo.status" />
-                    <span>{{ scope.row.actionInfo.status }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column label="Operate" min-width="100">
-                <template #default="scope">
-                    <el-button link type="primary" @click="onEditService(scope.row)">Edit</el-button>
-                    <el-button link type="primary" @click="onDeleteAction(scope.row)">Delete</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
+
+        <!-- 替换为 MyTable 开始 -->
+        <MyTable :data="serviceList" :columns="columns" v-loading="loading">
+            <template #status="{ row }">
+                <span class="status-dot" :class="row.actionInfo.status" />
+                <span>{{ row.actionInfo.status }}</span>
+            </template>
+            <template #operate="{ row }">
+                <el-button link type="primary" @click="onEditService(row)">Edit</el-button>
+                <el-button link type="primary" @click="onDeleteAction(row)">Delete</el-button>
+            </template>
+        </MyTable>
+        <!-- 替换为 MyTable 结束 -->
+
         <Pagination :pageTotal="pageTotal" :pageSize="pageSize" @CurrentChange="onCurrentChange" @SizeChange="onSizeChange"> </Pagination>
 
         <el-dialog v-model="dialogVisible" title="创建Action" width="500" :close-on-click-modal="false" draggable destroy-on-close>
             <el-input v-model="actionsText" style="width: 100%" :rows="20" type="textarea" :placeholder="placeholder" />
             <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 18px">
-                <el-button size="small" @click="dialogVisible = false">取消</el-button>
-                <el-button size="small" type="primary" @click="onSubmit">确定</el-button>
+                <el-button @click="dialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="onSubmit">确定</el-button>
             </div>
         </el-dialog>
 
@@ -56,11 +51,11 @@
                 <div style="display: flex; flex-grow: 1; justify-content: flex-end">
                     <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">如果您确定要删除，请输入 DELETE</div>
                 </div>
-                <el-input style="margin-left: 18px" size="small" v-model="deletion" placeholder="DELETE" />
+                <el-input style="margin-left: 18px" v-model="deletion" placeholder="DELETE" />
             </div>
             <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 18px">
-                <el-button size="small" @click="deleteDialog = false">取消</el-button>
-                <el-button size="small" type="primary" @click="onSubmitDelete">确定</el-button>
+                <el-button @click="deleteDialog = false">取消</el-button>
+                <el-button type="primary" @click="onSubmitDelete">确定</el-button>
             </div>
         </el-dialog>
 
@@ -69,6 +64,8 @@
 </template>
 
 <script>
+import MyTable from "../../components/MyTable/MyTable.vue";
+import { Refresh } from "@element-plus/icons-vue";
 import Pagination from "@/components/pagination/pagination.vue";
 import EditAction from "./editAction.vue";
 import { withDelay, convertToLimitOffset } from "../../utils/common.js";
@@ -76,10 +73,12 @@ import { GetActions, CreateAction, DeleteAction } from "../../api";
 
 export default {
     name: "ActionsIndex",
-    components: { Pagination, EditAction },
+    components: { MyTable, Pagination, EditAction },
+    setup() {
+        return { Refresh };
+    },
     data() {
         return {
-            breadcrumb: ["首页", "权限管理"],
             serviceList: [],
             loading: true,
             pageTotal: 0,
@@ -94,6 +93,16 @@ export default {
             editActionText: null,
             notify: false,
             notification: null,
+            // 新增表格列配置
+            columns: [
+                { label: "ID", prop: "id", width: 100 },
+                { label: "Name", prop: "actionInfo.name", minWidth: 150 },
+                { label: "Title", prop: "actionInfo.title", minWidth: 150 },
+                { label: "Description", prop: "actionInfo.description", minWidth: 150 },
+                { label: "Group", prop: "actionInfo.group" },
+                { label: "Status", slot: "status" },
+                { label: "Operate", slot: "operate", minWidth: 100 },
+            ],
         };
     },
     methods: {
@@ -117,7 +126,6 @@ export default {
                 .catch((err) => {
                     let msg = err;
                     if (this.notify === true) {
-                        // 关闭迁前一个Notification通知
                         this.notification.close();
                     }
                     this.notify = true;
@@ -142,7 +150,6 @@ export default {
             console.log("点击了按钮");
         },
         onRefresh() {
-            // 添加延时，优化视觉体验感
             this.loading = true;
             this.LoadGetActions(this.pageSize, this.page);
         },
@@ -155,11 +162,9 @@ export default {
             this.LoadGetActions(pageSize, 1);
         },
         onCreateAction() {
-            //打开创建action的框
             this.dialogVisible = true;
         },
         onSubmit() {
-            // 提交action创建
             let body = { actions: JSON.parse(this.actionsText) };
             this.loadCreateAction(body);
         },
@@ -175,7 +180,6 @@ export default {
             this.deleteActionData.push(val);
         },
         onSubmitDelete() {
-            // 发送请求
             if (this.deletion === "DELETE") {
                 let action_id = [];
                 this.deleteActionData.map((item) => {

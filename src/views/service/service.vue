@@ -1,40 +1,36 @@
 <template>
-    <div class="settings-container" style="min-width: 1200px">
+    <div class="settings-container border_red" style="min-width: 1200px">
         <el-card class="box-card">
             <div class="clearfix my_refresh">
                 <div>
                     <el-row class="box-card-header">
-                        <el-button size="small" type="primary" style="margin-left: 10px" @click="dialogVisible = true">创建服务</el-button>
+                        <el-button type="primary" style="margin-left: 10px" @click="dialogVisible = true">创建服务</el-button>
                     </el-row>
                 </div>
                 <!--刷新按钮-->
                 <el-row>
-                    <el-button size="small" type="primary" @click="onRefresh" style="margin-left: 10px">刷新</el-button>
+                    <el-button type="primary" :icon="Refresh" @click="onRefresh" :loading="loading" style="margin-left: 10px">刷新</el-button>
                 </el-row>
                 <!--/刷新按钮-->
             </div>
             <!--内容开始-->
-            <el-table :data="serviceList" style="width: 100%" v-loading="loading">
-                <el-table-column label="Name">
-                    <template #default="scope">
-                        <el-tooltip class="box-item" effect="dark" :content="scope.row.id" placement="right">
-                            <el-button link type="primary" @click="onSelectService(scope.row.id)">{{ scope.row.name }}</el-button>
-                        </el-tooltip>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="title" label="Title" />
-                <el-table-column label="Create Time">
-                    <template #default="scope">{{ formatDate(scope.row.create_time) }}</template>
-                </el-table-column>
-                <el-table-column label="Operate">
-                    <template #default="scope">
-                        <el-button link type="primary" @click="onDeleteService(scope.row)">Delete</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
+            <!-- 已替换为 MyTable -->
+            <MyTable :data="serviceList" :columns="columns" v-loading="loading">
+                <template #name="{ row }">
+                    <el-tooltip class="box-item" effect="dark" :content="row.id" placement="right">
+                        <el-button link type="primary" @click="onSelectService(row.id)">{{ row.name }}</el-button>
+                    </el-tooltip>
+                </template>
+                <template #create_time="{ row }">
+                    {{ formatDate(row.create_time) }}
+                </template>
+                <template #operate="{ row }">
+                    <el-button link type="primary" @click="onDeleteService(row)">Delete</el-button>
+                </template>
+            </MyTable>
         </el-card>
         <el-dialog v-model="dialogVisible" title="创建服务" width="500" :close-on-click-modal="false" draggable destroy-on-close>
-            <el-form size="small" :model="serviceform" label-width="auto" style="width: 100%">
+            <el-form :model="serviceform" label-width="auto" style="width: 100%">
                 <el-form-item label="Name">
                     <el-input v-model="serviceform.name" />
                 </el-form-item>
@@ -43,8 +39,8 @@
                 </el-form-item>
             </el-form>
             <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 18px">
-                <el-button size="small" @click="dialogVisible = false">取消</el-button>
-                <el-button size="small" type="primary" @click="onSubmit">确定</el-button>
+                <el-button @click="dialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="onSubmit">确定</el-button>
             </div>
         </el-dialog>
 
@@ -57,22 +53,32 @@
                 <div style="display: flex; flex-grow: 1; justify-content: flex-end">
                     <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">如果您确定要删除，请输入服务ID</div>
                 </div>
-                <el-input style="margin-left: 18px" size="small" v-model="deletion" placeholder="示例：715ffadad0d64f968b6d96939f4e605c" />
+                <el-input style="margin-left: 18px" v-model="deletion" placeholder="示例：715ffadad0d64f968b6d96939f4e605c" />
             </div>
             <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 18px">
-                <el-button size="small" @click="deleteDialog = false">取消</el-button>
-                <el-button size="small" type="primary" @click="onSubmitDelete">确定</el-button>
+                <el-button @click="deleteDialog = false">取消</el-button>
+                <el-button type="primary" @click="onSubmitDelete">确定</el-button>
             </div>
         </el-dialog>
     </div>
 </template>
 
 <script>
+import MyTable from "../../components/MyTable/MyTable.vue";
+import { Refresh } from "@element-plus/icons-vue";
 import { formatTime } from "@/utils/date.js";
 import { getService, CreateService, DeleteService } from "../../api";
 import { withDelay } from "../../utils/common.js";
 export default {
     name: "ServiceIndex",
+    components: {
+        MyTable,
+    },
+    setup() {
+        return {
+            Refresh,
+        };
+    },
     data() {
         return {
             breadcrumb: ["首页", "权限管理"],
@@ -87,6 +93,13 @@ export default {
             deleteServiceData: null,
             deletion: "",
             deletesid: "",
+            // MyTable 列配置
+            columns: [
+                { label: "Name", slot: "name" },
+                { label: "Title", prop: "title" },
+                { label: "Create Time", slot: "create_time" },
+                { label: "Operate", slot: "operate" },
+            ],
         };
     },
     methods: {
@@ -133,7 +146,7 @@ export default {
         },
         onRefresh() {
             this.loading = true;
-            this.GetService(this.pageSize, this.page);
+            this.GetService();
         },
         onSubmit() {
             // 创建服务

@@ -7,10 +7,7 @@ import { toLoginPage } from "./common.js";
 // 非组件模块可以这样加载使用 element 的 message 提示组件
 import { ElMessage } from "element-plus";
 
-const request = axios.create({
-    // baseURL: 'http://ttapi.research.itcast.cn/' // 请求的基础路径
-    baseURL: "/api/uias",
-});
+const request = axios.create({});
 
 request.interceptors.request.use(
     function (config) {
