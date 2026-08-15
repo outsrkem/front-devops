@@ -12,6 +12,6 @@ import ajax from "./ajax";
  */
 
 /** *********************************用户相关**************************************************** */
-export const login = (data) => ajax("/v1/user/signin", "POST", null, data);
-export const logout = () => ajax("/v1/user/logout", "POST");
-export const basicInfo = () => ajax("/v1/uias/user/basicInfo", "GET", null, null);
+export const login = (data) => ajax("/api/uias/v1/user/signin", "POST", null, data);
+export const logout = () => ajax("/api/uias/v1/user/logout", "POST");
+export const basicInfo = () => ajax("/api/uias/v1/uias/user/basicInfo", "GET", null, null);

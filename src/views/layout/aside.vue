@@ -23,9 +23,10 @@
                     <el-icon><Switch /></el-icon>
                     <span>APIGW</span>
                 </template>
-                <el-menu-item index="fztd-1">API分组</el-menu-item>
-                <el-menu-item index="fztd-2">API管理</el-menu-item>
-                <el-menu-item index="fztd-3">负载通道</el-menu-item>
+                <el-menu-item index="/apigw/group" @click="OnSwitchRoutes('/apigw/group')"> API分组 </el-menu-item>
+                <el-menu-item index="/apigw/apis" @click="OnSwitchRoutes('/apigw/apis')">API管理</el-menu-item>
+                <el-menu-item index="/apigw/channel" @click="OnSwitchRoutes('/apigw/channel')">负载通道</el-menu-item>
+                <el-menu-item index="/apigw/cert" @click="OnSwitchRoutes('/apigw/cert')">通道证书</el-menu-item>
             </el-sub-menu>
             <el-sub-menu index="djgl">
                 <template #title>
